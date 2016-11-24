@@ -1,37 +1,38 @@
 package pokreni.program;
 
-import java.io.IOException;
-
-import com.itextpdf.text.DocumentException;
+import java.util.ArrayList;
 
 import stavi.u.email.i.posalji.Email;
 import ubacivanje.u.pdf.Pdf;
 
-public class Main extends Pdf {
+public class Main {
 
-	@SuppressWarnings("static-access")
-	public static void main(String[] args) throws DocumentException, IOException {
+	// dodjeljivanje imena generisanom fajlu i smjestanje u pdf folder
+	public static final String NAZIV_FAJLA = "pdf/TrenutnaTemperatura.pdf";
+
+	public static void main(String[] args) throws Exception {
 
 		Pdf pdf = new Pdf();
+		// pozivanje metode za pravljenje pdf fajla
+		pdf.napravitiPdf(NAZIV_FAJLA);
 
-		pdf.napravitiPdf(nazivFajla);// pozivanje metode za pravljenje pdf fajla
-
-		Email email = new Email();
-		// argumenti za slanje e-maila
-		String host = "smtp.gmail.com"; // (SMTP) Server za slanje maila
-		String port = "587"; 
-		String userName = "daregm.dk@gmail.com"; // unijeti gmail korisnicko ime posiljaoca
-		String password = "lozinka"; 
-
-		String toAddress = "darko_ki@hotmail.com"; // email primaoca
+		// email primaoca
+		//dodao sam ArrayList i za slanje mail-a na vise email adresa
+		ArrayList<String> toAddress = new ArrayList<String>();
+		toAddress.add("darko_ki@hotmail.com");
+		toAddress.add("stana.kitic@gmail.com");
+		
+		// naslov emaila
 		String subject = "Naslov ovog email-a";
+		// poruka emaila
 		String message = "Stigla je poruka..";
-		// dodavanje fajla za slanje
-		String[] attachFiles = new String[1];
-		attachFiles[0] = "C:/Users/Darko/EclipseWork/TrenutnaTemperatura/pdf/TrenutnaTemperatura.pdf";
+	
+		// dodavanje fajlova za slanje
+		ArrayList<String> attachFiles = new ArrayList<String>();
+		attachFiles.add("pdf/TrenutnaTemperatura.pdf");
 
 		try {
-			email.sendEmailWithAttachments(host, port, userName, password, toAddress, subject, message, attachFiles);
+			Email.sendEmailWithAttachments(message, subject, toAddress, attachFiles);
 			System.out.println("Email uspjesno poslat..");
 		} catch (Exception e) {
 			System.out.println("Nije moguce poslati e-mail..");

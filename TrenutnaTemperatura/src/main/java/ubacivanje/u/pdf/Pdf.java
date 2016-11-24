@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
@@ -13,44 +12,48 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import uzimanje.temp.TrTemp;
 
-public class Pdf extends TrTemp {
+public class Pdf {
 
-	public static final String nazivFajla = "pdf/TrenutnaTemperatura.pdf"; // dodjeljivanje imena generisanom fajlu i smjestanje u pdf folder
+	Document document = new Document();
+
+	// metoda za paragrafe sa imenom grada i url-om
+	public Paragraph paragrafTemp(String imeGradaIurl) throws DocumentException {
+
+		// font za paragrafe sa ispisom trenutnog vremena
+		Font font = FontFactory.getFont("Times-Roman", 14);
+		Paragraph paragraph = new Paragraph(imeGradaIurl, font);
+		document.add(paragraph);
+		return paragraph;
+
+	}
+
+	// metoda za naslov
+	public Paragraph paragrafNaslov(String naslov) throws DocumentException {
+
+		// font za naslov
+		Font fontNaslov = FontFactory.getFont("Times-Roman", 18, Font.BOLD);
+		Paragraph paragraph = new Paragraph(naslov, fontNaslov);
+		paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+		document.add(paragraph);
+		return paragraph;
+
+	}
 
 	// pravljenje pdf dokumenta
 	public void napravitiPdf(String ime) throws DocumentException, IOException {
 
-		Document document = new Document();
-
-		PdfWriter.getInstance(document, new FileOutputStream(ime)); // dodaje elemente u pdf dokument
+		// dodaje elemente u pdf dokument
+		PdfWriter.getInstance(document, new FileOutputStream(ime));
 
 		document.open();
 
-		Font fontNaslov = FontFactory.getFont("Times-Roman", 18, Font.BOLD); // font za ispis temperatura
-		Font font = FontFactory.getFont("Times-Roman", 14); // font za naslov
+		paragrafNaslov("Trenutne temperature u gradovima");
 
-		Paragraph paragraph = new Paragraph();
+		paragrafTemp("\n 1. Beograd: " + TrTemp.uzetiTrTemp("https://www.timeanddate.com/weather/serbia/belgrade"));
 
-		paragraph = new Paragraph(" Trenutna temperatura u gradovima ", fontNaslov);
-		paragraph.setAlignment(Element.ALIGN_CENTER);
-		document.add(paragraph);
+		paragrafTemp("2. BanjaLuka: " + TrTemp.uzetiTrTemp("https://www.timeanddate.com/weather/bosnia-herzegovina/banja-luka"));
 
-		paragraph = new Paragraph("\n");
-		document.add(paragraph);
-
-		paragraph = new Paragraph("1. Beograd: \n" + uzetiTrTemp("https://www.timeanddate.com/weather/serbia/belgrade"),
-				font);
-		document.add(paragraph); // pozivanje metode sa url-om za beograd
-
-		paragraph = new Paragraph(
-				"2. Banja Luka: \n" + uzetiTrTemp("https://www.timeanddate.com/weather/bosnia-herzegovina/banja-luka"),
-				font);
-		document.add(paragraph); // pozivanje metode sa url-om za banjaluku
-
-		paragraph = new Paragraph(
-				"3. Sarajevo: \n" + uzetiTrTemp("https://www.timeanddate.com/weather/bosnia-herzegovina/sarajevo"),
-				font);
-		document.add(paragraph); // pozivanje metode sa url-om za sarajevo
+		paragrafTemp("3. Sarajevo: " + TrTemp.uzetiTrTemp("https://www.timeanddate.com/weather/bosnia-herzegovina/sarajevo"));
 
 		document.close();
 	}

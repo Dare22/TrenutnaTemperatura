@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="host">smtp.gmail.com</entry>
+	<entry key="port">587</entry>
+	<entry key="userName">daregm.dk@gmail.com</entry>
+	<entry key="password">unijeti pass</entry>
+
+</properties>
+
