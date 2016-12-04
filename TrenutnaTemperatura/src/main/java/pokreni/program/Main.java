@@ -8,7 +8,7 @@ import ubacivanje.u.pdf.Pdf;
 public class Main {
 
 	// dodjeljivanje imena generisanom fajlu i smjestanje u pdf folder
-	public static final String NAZIV_FAJLA = "pdf/TrenutnaTemperatura.pdf";
+	private static final String NAZIV_FAJLA = "pdf/TrenutnaTemperatura.pdf";
 
 	public static void main(String[] args) throws Exception {
 
@@ -33,6 +33,7 @@ public class Main {
 
 		try {
 			Email.sendEmailWithAttachments(message, subject, toAddress, attachFiles);
+			// umjesto System.out. koristiti Log4J, dakle sve ispise zamjeniti sa logovanjem u neki fajl
 			System.out.println("Email uspjesno poslat..");
 		} catch (Exception e) {
 			System.out.println("Nije moguce poslati e-mail..");

@@ -14,14 +14,12 @@ import uzimanje.temp.TrTemp;
 
 public class Pdf {
 
-	Document document = new Document();
+	private Document document = new Document();
 
 	// metoda za paragrafe sa imenom grada i url-om
 	public Paragraph paragrafTemp(String imeGradaIurl) throws DocumentException {
-
-		// font za paragrafe sa ispisom trenutnog vremena
-		Font font = FontFactory.getFont("Times-Roman", 14);
-		Paragraph paragraph = new Paragraph(imeGradaIurl, font);
+		// ovdje dodati da se font i njegova velicina uzimaju iz properties fajla, na taj nacin izgled PDF dokumenta moze da se konfigurise bez mjenjanja koda
+		Paragraph paragraph = new Paragraph(imeGradaIurl, FontFactory.getFont("Times-Roman", 14));
 		document.add(paragraph);
 		return paragraph;
 
@@ -29,10 +27,9 @@ public class Pdf {
 
 	// metoda za naslov
 	public Paragraph paragrafNaslov(String naslov) throws DocumentException {
-
-		// font za naslov
-		Font fontNaslov = FontFactory.getFont("Times-Roman", 18, Font.BOLD);
-		Paragraph paragraph = new Paragraph(naslov, fontNaslov);
+		// isto kao i gore 
+		Paragraph paragraph = new Paragraph(naslov, FontFactory.getFont("Times-Roman", 18, Font.BOLD));
+		// dodati alignment u properties fajl
 		paragraph.setAlignment(Paragraph.ALIGN_CENTER);
 		document.add(paragraph);
 		return paragraph;

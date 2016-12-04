@@ -40,8 +40,10 @@ public class Email {
 			// properties.loadFromXML(inputStreamXml);
 
 		} catch (Exception e) {
+			// sta ce se dogoditi ako ne uspije ucitavanje iz properties fajla?
 			e.printStackTrace();
 		}
+		// ovdje treba u finally blok dodati zatvaranje InputStream ili koristiti try with resources
 		
 		// uzimanje vrijednosti iz email.xml ili properties fajla
 		String host = properties.getProperty("host");
